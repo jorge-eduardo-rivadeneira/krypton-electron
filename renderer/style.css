@@ -1,0 +1,182 @@
+/* ==== VARIABLES ==== */
+:root {
+    /* Modo oscuro por defecto */
+    --bg-color: #121212;
+    --container-bg: #3c3c3c;
+    --text-color: #e0e0e0;
+    --input-bg: #2a2a2a;
+    --input-border: #444444df;
+    --primary-color: #121212;
+    --primary-gradient: linear-gradient(135deg, #3c3c3c, #121212);
+   
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+    background: var(--container-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+/* ==== TOGGLE DARK/LIGHT ==== */
+.toggle-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+#btnToggleMode {
+    padding: 6px 14px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: var(--primary-gradient);
+    color: #fff;
+    font-weight: 500;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#btnToggleMode:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+#btnToggleMode:active {
+    transform: scale(0.98) translateY(1px);
+}
+
+/* ==== LOGO ==== */
+.logo-container {
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo {
+    width: 300px;
+    height:auto;
+}
+
+/* ==== FILAS ==== */
+.row {
+    margin: 15px 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+/* ==== INPUTS ==== */
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    font-size: 14px;
+    background: var(--input-bg);
+    border: 2px solid var(--input-border);
+    color: var(--text-color);
+}
+
+/* ==== BOTONES ==== */
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.button-row button,
+#btnStart {
+    min-width: 200px;
+    padding: 12px 20px;
+    background: var(--primary-gradient);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.button-row button:hover,
+#btnStart:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+}
+
+.button-row button:active,
+#btnStart:active {
+    transform: scale(0.98) translateY(1px);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ==== PROGRESS ==== */
+.progress-container {
+    margin-top: 20px;
+}
+
+progress {
+    width: 100%;
+    height: 22px;
+    appearance: none;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: var(--input-bg);
+}
+
+progress::-webkit-progress-bar {
+    background-color: #fff;
+}
+
+progress::-webkit-progress-value {
+    background: var(--primary-gradient);
+}
+
+/* ==== TEXTO PROGRESO ==== */
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-top: 5px;
+    color: #fff;
+}
+
+/* ==== RADIOS ==== */
+.radio-group {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 10px;
+    color: #fff;
+    font-weight: 500;
+}
+
+/* ==== PATH ==== */
+#lblPath, .radio-group label, progress {
+    color: var(--text-color);
+}
+
+.center-button {
+    display: flex;
+    justify-content: center;
+}
+

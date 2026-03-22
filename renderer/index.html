@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Krypton</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+
+        <!-- LOGO -->
+        <div class="logo-container">
+            <img src="../assets/logo.png" alt="Krypton Logo" class="logo" id="logo">
+        </div>
+
+        <!-- Select Folder / Files -->
+        <div class="row button-row">
+            <button id="btnSelectFolder">Select folder</button>
+            <button id="btnSelectFiles">Select file(s)</button>
+        </div>
+
+        <!-- Path -->
+        <div class="row">
+            <div id="lblPath"></div>
+        </div>
+
+        <!-- Password -->
+        <div class="row">
+            <label for="txtPassword">Password:</label>
+            <input type="password" id="txtPassword" placeholder="Enter the password">
+        </div>
+
+        <!-- Encrypt / Decrypt -->
+        <div class="row radio-group">
+            <label>
+                <input type="radio" id="encryptRDB" name="action" checked> Encrypt
+            </label>
+            <label>
+                <input type="radio" id="decryptRDB" name="action"> Decrypt
+            </label>
+        </div>
+
+        <!-- Start -->
+        <div class="row center-button">
+            <button id="btnStart">Encrypt</button>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-container">
+            <progress id="progressBar" value="0" max="100"></progress>
+            <div class="progress-info">
+                <span id="progressPercent">0%</span>
+                <span id="progressSpeed">0 MB/s</span>
+                <span id="progressTime">--:--</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
