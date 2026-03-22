@@ -1,1 +1,0 @@
-npm run build -- --linux deb --x64
