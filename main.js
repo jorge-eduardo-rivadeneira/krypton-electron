@@ -2,10 +2,10 @@ const { app, BrowserWindow, dialog, ipcMain, Menu } = require("electron");
 const path = require("path");
 
 const {
-    encryptFolder,
-    decryptFolder,
     encryptFiles,
-    decryptFiles
+    decryptFiles,
+    encryptFolders,
+    decryptFolders
 } = require("./crypto/crypto");
 
 let mainWindow;
@@ -37,12 +37,25 @@ function createMenu() {
         {
             label: "File",
             submenu: [
-                
+
                 { type: "separator" },
                 {
                     label: "Exit",
                     role: "quit"
                 }
+            ]
+        },
+
+        {
+            label: "Edit",
+            submenu: [
+                { role: "undo" },
+                { role: "redo" },
+                { type: "separator" },
+                { role: "cut" },
+                { role: "copy" },
+                { role: "paste" },
+                { role: "selectAll" }
             ]
         },
 
@@ -110,59 +123,15 @@ ipcMain.handle("selectFiles", async () => {
 
 });
 
-
-// Seleccionar carpeta
-ipcMain.handle("selectFolder", async () => {
+ipcMain.handle("selectFolders", async () => {
 
     const result = await dialog.showOpenDialog({
-        properties: ["openDirectory"]
+        properties: ["openDirectory","multiSelections"]
     });
 
     if (result.canceled) return null;
 
-    return result.filePaths[0];
-
-});
-
-
-// Cifrar carpeta
-
-ipcMain.handle("encryptFolder", async (event, folder, password) => {
-
-    try {
-
-        await encryptFolder(event, folder, password);
-
-        return { success: true };
-
-    } catch (err) {
-
-        console.error(err);
-
-        return { success: false, error: err.message };
-
-    }
-
-});
-
-
-// Descifrar carpeta
-
-ipcMain.handle("decryptFolder", async (event, folder, password) => {
-
-    try {
-
-        await decryptFolder(event, folder, password);
-
-        return { success: true };
-
-    } catch (err) {
-
-        console.error(err);
-
-        return { success: false, error: err.message };
-
-    }
+    return result.filePaths;
 
 });
 
@@ -192,6 +161,34 @@ ipcMain.handle("decryptFiles", async (event, files, password) => {
 
         return { success: true };
 
+    } catch (err) {
+
+        console.error(err);
+
+        return { success: false, error: err.message };
+
+    }
+
+});
+
+ipcMain.handle("encryptFolders", async (event, folders, password) => {
+    try {
+        await encryptFolders(event, folders, password);
+        return { success: true };
+    } catch (err) {
+
+        console.error(err);
+
+        return { success: false, error: err.message };
+
+    }
+
+});
+
+ipcMain.handle("decryptFolders", async (event, folders, password) => {
+        try {
+        await decryptFolders(event, folders, password);
+        return { success: true };
     } catch (err) {
 
         console.error(err);

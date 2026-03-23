@@ -1,6 +1,5 @@
 /* ==== VARIABLES ==== */
 :root {
-    /* Modo oscuro por defecto */
     --bg-color: #121212;
     --container-bg: #3c3c3c;
     --text-color: #e0e0e0;
@@ -29,7 +28,6 @@ body {
     position: relative;
 }
 
-/* ==== TOGGLE DARK/LIGHT ==== */
 .toggle-container {
     display: flex;
     justify-content: flex-end;
@@ -57,7 +55,6 @@ body {
     transform: scale(0.98) translateY(1px);
 }
 
-/* ==== LOGO ==== */
 .logo-container {
     text-align:center;
     margin-bottom:25px;
@@ -68,7 +65,6 @@ body {
     height:auto;
 }
 
-/* ==== FILAS ==== */
 .row {
     margin: 15px 0;
 }
@@ -78,8 +74,6 @@ label {
     margin-bottom: 5px;
     font-weight: 500;
 }
-
-/* ==== INPUTS ==== */
 
 input[type="text"],
 input[type="password"] {
@@ -129,7 +123,6 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* ==== PROGRESS ==== */
 .progress-container {
     margin-top: 20px;
 }
@@ -151,7 +144,6 @@ progress::-webkit-progress-value {
     background: var(--primary-gradient);
 }
 
-/* ==== TEXTO PROGRESO ==== */
 .progress-info {
     display: flex;
     justify-content: space-between;
@@ -160,7 +152,6 @@ progress::-webkit-progress-value {
     color: #fff;
 }
 
-/* ==== RADIOS ==== */
 .radio-group {
     display: flex;
     justify-content: center;
@@ -170,7 +161,6 @@ progress::-webkit-progress-value {
     font-weight: 500;
 }
 
-/* ==== PATH ==== */
 #lblPath, .radio-group label, progress {
     color: var(--text-color);
 }

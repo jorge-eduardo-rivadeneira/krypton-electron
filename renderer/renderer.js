@@ -1,8 +1,9 @@
 const btnSelectFiles = document.getElementById("btnSelectFiles");
-const btnSelectFolder = document.getElementById("btnSelectFolder");
+const btnSelectFolders = document.getElementById("btnSelectFolders");
 const lblPath = document.getElementById("lblPath");
 const btnStart = document.getElementById("btnStart");
 const txtPassword = document.getElementById("txtPassword");
+const chkShowPassword = document.getElementById("chkShowPassword");
 
 const progressBar = document.getElementById("progressBar");
 const progressPercent = document.getElementById("progressPercent");
@@ -11,11 +12,10 @@ const progressTime = document.getElementById("progressTime");
 
 const radioEncrypt = document.getElementById("encryptRDB");
 const radioDecrypt = document.getElementById("decryptRDB");
-const btnToggleMode = document.getElementById("btnToggleMode");
 const logo = document.getElementById("logo");
 
 
-let selectedFolder = null;
+let selectedFolders = [];
 let selectedFiles = [];
 let darkMode = true;
 
@@ -23,7 +23,7 @@ function resetUI() {
 
     txtPassword.value = "";
 
-    selectedFolder = null;
+    selectedFolders = [];
     selectedFiles = [];
 
     lblPath.innerText = "";
@@ -40,20 +40,20 @@ btnSelectFiles.addEventListener("click", async () => {
 
     if (files && files.length > 0) {
         selectedFiles = files;
-        selectedFolder = null;
+        selectedFolders = [];
         lblPath.innerText = files.join("\n");
     }
 
 });
 
-btnSelectFolder.addEventListener("click", async () => {
+btnSelectFolders.addEventListener("click", async () => {
 
-    const folder = await window.api.selectFolder();
-
-    if (folder) {
-        selectedFolder = folder;
+    const folders = await window.api.selectFolders();
+    
+    if (folders && folders.length > 0) {
+        selectedFolders = folders;
         selectedFiles = [];
-        lblPath.innerText = folder;
+        lblPath.innerText = folders.join("\n");
     }
 
 });
@@ -67,21 +67,18 @@ btnStart.addEventListener("click", async () => {
         return;
     }
 
-    if (!selectedFolder && selectedFiles.length === 0) {
+    if (selectedFolders.length === 0 && selectedFiles.length === 0) {
         alert("Please select a folder or files");
         return;
     }
 
     btnStart.disabled = true;
-
     progressBar.value = 0;
     progressPercent.innerText = "0%";
     progressSpeed.innerText = "0 MB/s";
     progressTime.innerText = "--:--";
 
     try {
-
-        // ARCHIVOS INDIVIDUALES
         if (selectedFiles.length > 0) {
 
             if (radioEncrypt.checked) {
@@ -105,12 +102,11 @@ btnStart.addEventListener("click", async () => {
 
         }
 
-        // CARPETA
         else {
 
             if (radioEncrypt.checked) {
 
-                const result = await window.api.encryptFolder(selectedFolder, password);
+                const result = await window.api.encryptFolders(selectedFolders, password);
 
                 if (!result.success)
                     throw new Error(result.error);
@@ -119,7 +115,7 @@ btnStart.addEventListener("click", async () => {
 
             } else {
 
-                const result = await window.api.decryptFolder(selectedFolder, password);
+                const result = await window.api.decryptFolders(selectedFolders, password);
 
                 if (!result.success)
                     throw new Error(result.error);
@@ -169,34 +165,12 @@ radioDecrypt.addEventListener("change", () => {
 
 });
 
-btnToggleMode.addEventListener("click", () => {
-
-    
-    if (darkMode) {
-        // Modo claro
-        document.documentElement.style.setProperty('--bg-color', '#f5f5f5');
-        document.documentElement.style.setProperty('--container-bg', '#ffffff');
-        document.documentElement.style.setProperty('--text-color', '#1e1e1e'); // texto oscuro
-        document.documentElement.style.setProperty('--input-bg', '#ffffff');
-        document.documentElement.style.setProperty('--input-border', '#ccc');
-        document.documentElement.style.setProperty('--primary-color', '#3c3c3c');
-        document.documentElement.style.setProperty('--primary-gradient', 'linear-gradient(135deg, #3c3c3c, #3c3c3c)');
-        logo.src = "./../assets/logo2.png";
-        btnToggleMode.textContent="🌙"
-        
-
-    } else {
-        // Modo oscuro
-        document.documentElement.style.setProperty('--bg-color', '#121212');
-        document.documentElement.style.setProperty('--container-bg', '#3c3c3c');
-        document.documentElement.style.setProperty('--text-color', '#e0e0e0'); // texto claro
-        document.documentElement.style.setProperty('--input-bg', '#2a2a2a');
-        document.documentElement.style.setProperty('--input-border', '#444444df');
-        document.documentElement.style.setProperty('--primary-color', '#121212');
-        document.documentElement.style.setProperty('--primary-gradient', 'linear-gradient(135deg, #121212, #121212)');
-        logo.src = "./../assets/logo.png";
-        btnToggleMode.textContent="☀️"
-    }
-    darkMode = !darkMode;
+chkShowPassword.addEventListener("change", () => {
+    txtPassword.type = chkShowPassword.checked ? "text" : "password";
+ 
 });
+
+
+
+
 

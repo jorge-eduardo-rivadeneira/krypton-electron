@@ -9,11 +9,6 @@ const TAG_LENGTH = 16;
 const KEY_LENGTH = 32;
 const ITERATIONS = 100000;
 
-
-/* ================================
-   Obtener todos los archivos
-================================ */
-
 function getFiles(dir) {
 
     let results = [];
@@ -36,11 +31,6 @@ function getFiles(dir) {
     return results;
 }
 
-
-/* ================================
-   Derivar clave desde password
-================================ */
-
 function deriveKey(password, salt) {
 
     return crypto.pbkdf2Sync(
@@ -58,47 +48,43 @@ function deriveKey(password, salt) {
    Cifrar carpeta
 ================================ */
 
-async function encryptFolder(event, folder, password) {
+// async function encryptFolder(event, folder, password) {
 
-    const files = getFiles(folder).filter(f => !f.endsWith(".enc"));
+//     const files = getFiles(folder).filter(f => !f.endsWith(".enc"));
 
-    if (files.length === 0) return;
+//     if (files.length === 0) return;
 
-    const totalBytes = files.reduce((sum, file) => sum + fs.statSync(file).size, 0);
+//     const totalBytes = files.reduce((sum, file) => sum + fs.statSync(file).size, 0);
 
-    let processedBytes = 0;
-    const startTime = Date.now();
+//     let processedBytes = 0;
+//     const startTime = Date.now();
 
-    for (const file of files) {
+//     for (const file of files) {
 
-        await encryptFile(file, password, bytes => {
+//         await encryptFile(file, password, bytes => {
 
-            processedBytes += bytes;
+//             processedBytes += bytes;
 
-            const percent = Math.round((processedBytes / totalBytes) * 100);
-            const elapsed = (Date.now() - startTime) / 1000;
-            const speed = (processedBytes / 1024 / 1024) / elapsed;
+//             const percent = Math.round((processedBytes / totalBytes) * 100);
+//             const elapsed = (Date.now() - startTime) / 1000;
+//             const speed = (processedBytes / 1024 / 1024) / elapsed;
 
-            const remaining =
-                (totalBytes - processedBytes) /
-                (processedBytes / elapsed);
+//             const remaining =
+//                 (totalBytes - processedBytes) /
+//                 (processedBytes / elapsed);
 
-            event.sender.send("progress", {
-                percent,
-                speed: speed.toFixed(2),
-                remaining: formatTime(remaining)
-            });
+//             event.sender.send("progress", {
+//                 percent,
+//                 speed: speed.toFixed(2),
+//                 remaining: formatTime(remaining)
+//             });
 
-        });
+//         });
 
-    }
+//     }
 
-}
+// }
 
-
-/* ================================
-   Cifrar archivo
-================================ */
 
 function encryptFile(file, password, progressCallback) {
 
@@ -161,63 +147,58 @@ function encryptFile(file, password, progressCallback) {
    Descifrar carpeta
 ================================ */
 
-async function decryptFolder(event, folder, password) {
+// async function decryptFolder(event, folder, password) {
 
-    const files = getFiles(folder).filter(f => f.endsWith(".enc"));
+//     const files = getFiles(folder).filter(f => f.endsWith(".enc"));
 
-    if (files.length === 0) return;
+//     if (files.length === 0) return;
 
-    const totalBytes = files.reduce((sum, file) => sum + fs.statSync(file).size, 0);
+//     const totalBytes = files.reduce((sum, file) => sum + fs.statSync(file).size, 0);
 
-    let processedBytes = 0;
-    const startTime = Date.now();
+//     let processedBytes = 0;
+//     const startTime = Date.now();
 
-    for (const file of files) {
+//     for (const file of files) {
 
-        try {
+//         try {
 
-            await decryptFile(file, password, bytes => {
+//             await decryptFile(file, password, bytes => {
 
-                processedBytes += bytes;
+//                 processedBytes += bytes;
 
-                const percent = Math.round((processedBytes / totalBytes) * 100);
-                const elapsed = (Date.now() - startTime) / 1000;
-                const speed = (processedBytes / 1024 / 1024) / elapsed;
+//                 const percent = Math.round((processedBytes / totalBytes) * 100);
+//                 const elapsed = (Date.now() - startTime) / 1000;
+//                 const speed = (processedBytes / 1024 / 1024) / elapsed;
 
-                const remaining =
-                    (totalBytes - processedBytes) /
-                    (processedBytes / elapsed);
+//                 const remaining =
+//                     (totalBytes - processedBytes) /
+//                     (processedBytes / elapsed);
 
-                event.sender.send("progress", {
-                    percent,
-                    speed: speed.toFixed(2),
-                    remaining: formatTime(remaining)
-                });
+//                 event.sender.send("progress", {
+//                     percent,
+//                     speed: speed.toFixed(2),
+//                     remaining: formatTime(remaining)
+//                 });
 
-            });
+//             });
 
-        } catch (err) {
+//         } catch (err) {
 
-            if (err.message.includes("Contraseña incorrecta")) {
+//             if (err.message.includes("Contraseña incorrecta")) {
 
-                throw new Error(`Archivo ${path.basename(file)}: contraseña incorrecta`);
+//                 throw new Error(`Archivo ${path.basename(file)}: contraseña incorrecta`);
 
-            } else {
+//             } else {
 
-                throw err;
+//                 throw err;
 
-            }
+//             }
 
-        }
+//         }
 
-    }
+//     }
 
-}
-
-
-/* ================================
-   Descifrar archivo
-================================ */
+// }
 
 function decryptFile(file, password, progressCallback) {
 
@@ -290,11 +271,6 @@ function decryptFile(file, password, progressCallback) {
 
 }
 
-
-/* ================================
-   Formato tiempo
-================================ */
-
 function formatTime(seconds) {
 
     seconds = Math.max(0, Math.round(seconds));
@@ -305,11 +281,6 @@ function formatTime(seconds) {
     return `${m}:${s.toString().padStart(2, "0")}`;
 
 }
-
-
-/* ================================
-   Cifrar archivos individuales
-================================ */
 
 async function encryptFiles(event, files, password){
 
@@ -349,11 +320,6 @@ async function encryptFiles(event, files, password){
     return { success:true };
 
 }
-
-
-/* ================================
-   Descifrar archivos individuales
-================================ */
 
 async function decryptFiles(event, files, password){
 
@@ -408,10 +374,113 @@ async function decryptFiles(event, files, password){
 
 }
 
+async function encryptFolders(event, folders, password) {
+
+    let allFiles = [];
+
+    // Obtener todos los archivos de todas las carpetas
+    for (const folder of folders) {
+        const files = getFiles(folder).filter(f => !f.endsWith(".enc"));
+        allFiles = allFiles.concat(files);
+    }
+
+    if (allFiles.length === 0) return;
+
+    const totalBytes = allFiles.reduce((sum, file) => sum + fs.statSync(file).size, 0);
+
+    let processedBytes = 0;
+    const startTime = Date.now();
+
+    for (const file of allFiles) {
+
+        await encryptFile(file, password, (bytes) => {
+
+            processedBytes += bytes;
+
+            const percent = Math.round((processedBytes / totalBytes) * 100);
+            const elapsed = (Date.now() - startTime) / 1000;
+            const speed = (processedBytes / 1024 / 1024) / elapsed;
+
+            const remaining =
+                (totalBytes - processedBytes) /
+                (processedBytes / elapsed);
+
+            event.sender.send("progress", {
+                percent,
+                speed: speed.toFixed(2),
+                remaining: formatTime(remaining)
+            });
+
+        });
+
+    }
+
+    return { success: true };
+}
+
+async function decryptFolders(event, folders, password) {
+
+    let allFiles = [];
+
+    for (const folder of folders) {
+        const files = getFiles(folder).filter(f => f.endsWith(".enc"));
+        allFiles = allFiles.concat(files);
+    }
+
+    if (allFiles.length === 0) return;
+
+    const totalBytes = allFiles.reduce((sum, file) => sum + fs.statSync(file).size, 0);
+
+    let processedBytes = 0;
+    const startTime = Date.now();
+
+    for (const file of allFiles) {
+
+        try {
+
+            await decryptFile(file, password, (bytes) => {
+
+                processedBytes += bytes;
+
+                const percent = Math.round((processedBytes / totalBytes) * 100);
+                const elapsed = (Date.now() - startTime) / 1000;
+                const speed = (processedBytes / 1024 / 1024) / elapsed;
+
+                const remaining =
+                    (totalBytes - processedBytes) /
+                    (processedBytes / elapsed);
+
+                event.sender.send("progress", {
+                    percent,
+                    speed: speed.toFixed(2),
+                    remaining: formatTime(remaining)
+                });
+
+            });
+
+        } catch (err) {
+
+            if (err.message.includes("Contraseña incorrecta")) {
+                throw new Error(`Archivo ${path.basename(file)}: contraseña incorrecta`);
+            } else {
+                throw err;
+            }
+
+        }
+
+    }
+
+    return { success: true };
+}
+
+
 
 module.exports = {
-    encryptFolder,
-    decryptFolder,
+    // encryptFolder,
+    // decryptFolder,
     encryptFiles,
-    decryptFiles
+    decryptFiles,
+    encryptFolders,    
+    decryptFolders  
+
 };
