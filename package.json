@@ -33,14 +33,11 @@
     },
 
     "linux": {
-  "target": [
-    "AppImage",
-    "deb"
-  ],
-  "maintainer":"Jorge Eduardo Rivadeneira Munoz <jorgeduardo@proton.me>",
-  "icon": "assets/icon.png",
-  "category": "Utility"
-}
+      "target": ["AppImage","deb"],
+      "maintainer":"Jorge Eduardo Rivadeneira Munoz <jorgeduardo@proton.me>",
+      "icon": "assets/icon.png",
+      "category": "Utility"
+    }
   },
 
   "keywords": [],
