@@ -6,40 +6,36 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "build":"electron-builder"
+    "build": "electron-builder"
   },
   "homepage": "",
-
   "build": {
     "appId": "com.krypton.encryptor",
     "productName": "Krypton",
-
     "directories": {
       "output": "dist"
     },
-
     "files": [
       "**/*"
     ],
-
     "win": {
       "target": "nsis",
       "icon": "assets/icon.ico"
     },
-
     "mac": {
       "target": "dmg",
       "icon": "assets/icon.icns"
     },
-
     "linux": {
-      "target": ["AppImage","deb"],
-      "maintainer":"Jorge Eduardo Rivadeneira Munoz <jorgeduardo@proton.me>",
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "maintainer": "Jorge Eduardo Rivadeneira Munoz <jorgeduardo@proton.me>",
       "icon": "assets/png",
       "category": "Utility"
     }
   },
-
   "keywords": [],
   "author": {
     "name": "Jorge Eduardo Rivadeneira Muñoz",
@@ -47,12 +43,8 @@
   },
   "license": "ISC",
   "type": "commonjs",
-  "dependencies": {
-
-  },
   "devDependencies": {
     "electron": "^40.8.0",
     "electron-builder": "^26.8.1"
-    
   }
 }
