@@ -19,6 +19,7 @@ function createWindow() {
         resizable: false,   
         maximizable: false, 
         icon: path.join(__dirname, "assets/icon.png"),
+        title: "Krypton - File and Folder Crypto-Tool",
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
             contextIsolation: true,

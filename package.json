@@ -29,7 +29,7 @@
     "linux": {
       "target": [
         "AppImage",
-        "deb"
+        "rpm"
       ],
       "maintainer": "Jorge Eduardo Rivadeneira Munoz <jorgeduardo@proton.me>",
       "icon": "assets/png",
